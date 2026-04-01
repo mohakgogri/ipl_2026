@@ -1,4 +1,5 @@
 import streamlit as st
+import random
 
 st.set_page_config(
     page_title="IPL 2026 Dashboard",
@@ -6,24 +7,12 @@ st.set_page_config(
     layout="wide"
 )
 
-st.title("🏏 IPL 2026 Dashboard")
-st.write("Welcome to the IPL 2026 Dashboard. Use the sidebar to navigate to different sections.")
+st.title("We only belive in Jassi Bhai")
 
-# Home page content
-st.markdown("""
-### Welcome!
-
-This dashboard provides comprehensive information about:
-- **Schedule**: View upcoming matches
-- **Results**: Check match results and statistics
-
-Navigate using the sidebar menu to explore more!
-""")
+fans = ["Rahul", "Manogna", "Shishir", "Ashay", "Surya", "Mohak"]
+random.shuffle(fans)
 
 st.markdown("---")
-st.markdown(
-    "_Fans_: Rahul, Manogna, Shishir, Ashay, Surya, Mohak",
-    unsafe_allow_html=True,
-)
+st.markdown(f"Fans : {', '.join(fans)}")
 
 

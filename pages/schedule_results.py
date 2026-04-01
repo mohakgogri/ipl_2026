@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 from datetime import datetime
+from data import schedule_data, results_data
 
 st.set_page_config(page_title="IPL 2026 Schedule & Results", layout="wide")
 
@@ -8,29 +9,6 @@ st.title("🏏 IPL 2026 Schedule & Results")
 
 # Create tabs for Schedule and Results
 tab1, tab2 = st.tabs(["📅 Schedule", "📊 Results"])
-
-# Sample data - Replace with actual IPL 2026 data
-schedule_data = {
-    "Match #": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-    "Date": ["2026-03-28", "2026-03-29", "2026-03-30", "2026-03-31", "2026-04-01", 
-             "2026-04-02", "2026-04-03", "2026-04-04", "2026-04-05", "2026-04-06"],
-    "Team 1": ["CSK", "MI", "RCB", "KKR", "DC", "SRH", "GT", "LSG", "PBKS", "RR"],
-    "Team 2": ["RR", "SRH", "GT", "LSG", "PBKS", "CSK", "MI", "RCB", "KKR", "DC"],
-    "Venue": ["Chennai", "Mumbai", "Bangalore", "Kolkata", "Delhi", 
-              "Hyderabad", "Ahmedabad", "Lucknow", "Mohali", "Jaipur"],
-    "Time": ["19:30", "19:30", "19:30", "19:30", "19:30", "19:30", "19:30", "19:30", "19:30", "19:30"]
-}
-
-results_data = {
-    "Match #": [1, 2],
-    "Date": ["2026-03-28", "2026-03-29"],
-    "Team 1": ["CSK", "MI"],
-    "Team 2": ["RR", "SRH"],
-    "Winner": ["CSK", "MI"],
-    "Margin": ["6 wickets", "4 runs"],
-    "Venue": ["Chennai", "Mumbai"],
-    "Man of the Match": ["Du Plessis", "Hardik Pandya"]
-}
 
 with tab1:
     st.subheader("Upcoming Matches")
@@ -40,13 +18,13 @@ with tab1:
     st.dataframe(schedule_df, use_container_width=True, hide_index=True)
     
     st.markdown("---")
-    
+
     # Add filters
     st.subheader("Filter Matches")
     col1, col2 = st.columns(2)
-    
-    all_teams = sorted(set(schedule_data["Team 1"] + schedule_data["Team 2"]))
-    all_venues = sorted(set(schedule_data["Venue"]))
+
+    all_teams = sorted({m["Team 1"] for m in schedule_data} | {m["Team 2"] for m in schedule_data})
+    all_venues = sorted({m["Venue"] for m in schedule_data})
     
     with col1:
         selected_teams = st.multiselect(
@@ -82,8 +60,8 @@ with tab1:
 
 with tab2:
     st.subheader("Past Matches")
-    
-    if len(results_data["Match #"]) > 0:
+
+    if len(results_data) > 0:
         results_df = pd.DataFrame(results_data)
         st.dataframe(results_df, use_container_width=True, hide_index=True)
         

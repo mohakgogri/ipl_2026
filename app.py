@@ -20,3 +20,10 @@ This dashboard provides comprehensive information about:
 Navigate using the sidebar menu to explore more!
 """)
 
+st.markdown("---")
+st.markdown(
+    "_Fans_: Rahul, Manogna, Shishir, Ashay, Surya, Mohak",
+    unsafe_allow_html=True,
+)
+
+
